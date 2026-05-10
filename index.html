@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+  AUTEK PRO — PORTFOLIO DE SALEH ABDULSALAM
+  ─────────────────────────────────────────────────────────────────────────────
+  📚 STRUCTURE DU PROJET :
+    • index.html → la STRUCTURE (le squelette) — modifiable directement
+    • style.css  → tout le DESIGN (couleurs, tailles, animations)
+    • script.js  → le COMPORTEMENT (menu mobile + bilingue FR/AR + RTL)
+
+  🌍 BILINGUE :
+    Tous les éléments traduisibles ont un attribut data-i18n="clé".
+    Les traductions sont stockées dans script.js (objet "translations").
+    Pour modifier un texte arabe, ouvre script.js et cherche la clé.
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0b" />
+
+  <title>Saleh Abdulsalam · Autek Pro — Mécanicien & Diagnostic à Dijon</title>
+  <meta name="description" content="Mécanicien automobile à Dijon, 20 ans, diplômé d'un CAP avec 3 ans d'expérience. Investi dans le diagnostic électronique avancé. À la recherche d'une alternance Bac Pro." />
+
+  <!-- ─── Polices Google : Inter (FR) + JetBrains Mono (chiffres) + Cairo (AR) ─── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ─── Mini-script qui applique la langue mémorisée AVANT le rendu (anti-flash) ─── -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('autekpro-lang') || 'fr';
+        document.documentElement.lang = saved;
+        document.documentElement.dir = saved === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.classList.add('lang-' + saved);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  NAVIGATION (BARRE DU HAUT)                                            ║
+       ║  Contient :                                                            ║
+       ║  • le logo + nom à gauche                                              ║
+       ║  • le toggle de langue FR/AR (visible sur mobile et desktop)           ║
+       ║  • les liens du menu (desktop) ou hamburger (mobile)                   ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+
+      <!-- Logo / nom du site -->
+      <a href="#top" class="nav__brand">
+        <span class="nav__logo">⚙</span>
+        <span class="nav__brand-text">Autek <span class="accent">Pro</span></span>
+      </a>
+
+      <!-- Bloc de droite : toggle langue + liens + hamburger -->
+      <div class="nav__right">
+
+        <!-- ─── BOUTON DE BASCULE FR / AR ─────────────────────────────────────
+             Cliquer sur "FR" ou "AR" change la langue de tout le site.
+             Géré par script.js (fonction applyLanguage).
+             ─────────────────────────────────────────────────────────────── -->
+        <button class="lang-toggle" id="langToggle" aria-label="Changer la langue">
+          <span class="lang-toggle__globe" aria-hidden="true">🌐</span>
+          <span class="lang-toggle__opt" data-lang="fr">FR</span>
+          <span class="lang-toggle__sep">·</span>
+          <span class="lang-toggle__opt" data-lang="ar">AR</span>
+        </button>
+
+        <!-- Liens du menu (desktop) -->
+        <div class="nav__links">
+          <a href="#about" data-i18n="nav-about">À propos</a>
+          <a href="#savoir-faire" data-i18n="nav-skills">Savoir-faire</a>
+          <a href="#approche" data-i18n="nav-approach">Approche</a>
+          <a href="#reseau" data-i18n="nav-network">Réseau</a>
+          <a href="#vision" data-i18n="nav-vision">Vision</a>
+          <a href="#contact" class="nav__cta" data-i18n="nav-cta">Me contacter</a>
+        </div>
+
+        <!-- Bouton hamburger (mobile) -->
+        <button class="nav__menu-btn" id="menuBtn" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Menu déroulant mobile -->
+    <div class="nav__mobile" id="mobileMenu">
+      <a href="#about" data-i18n="nav-about">À propos</a>
+      <a href="#savoir-faire" data-i18n="nav-skills">Savoir-faire</a>
+      <a href="#approche" data-i18n="nav-approach">Approche</a>
+      <a href="#reseau" data-i18n="nav-network">Réseau</a>
+      <a href="#vision" data-i18n="nav-vision">Vision</a>
+      <a href="#contact" data-i18n="nav-contact">Contact</a>
+    </div>
+  </nav>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 1 — HERO                                                      ║
+       ║  Image : "image hero.jpg"                                              ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <header id="top" class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__glow hero__glow--1"></div>
+    <div class="hero__glow hero__glow--2"></div>
+
+    <div class="container hero__inner">
+      <div class="hero__content">
+
+        <div class="badge">
+          <span class="badge__dot"></span>
+          <span data-i18n="hero-badge">Mécanicien · 20 ans · Dijon</span>
+        </div>
+
+        <h1 class="hero__title" data-i18n="hero-title">Saleh<br /><span class="gradient-text">Abdulsalam.</span></h1>
+
+        <p class="hero__lead" data-i18n="hero-lead">La rigueur d'un <strong>professionnel</strong>.<br />La passion <strong>d'apprendre</strong>.</p>
+
+        <p class="hero__desc" data-i18n="hero-desc">Diplômé d'un <strong>CAP Maintenance des Véhicules</strong>, je cumule <strong>3 ans d'expérience</strong> mêlant interventions en atelier et auto-formation poussée. Équipé de mon <strong>propre matériel de diagnostic</strong>, je m'investis à 100 % pour développer mes compétences. Je recherche aujourd'hui une <strong>alternance pour préparer mon Bac Pro</strong> dans une concession dynamique, tout en mettant mon sérieux et mes connaissances à la disposition de mon réseau pour tout conseil technique.</p>
+
+        <div class="hero__cta">
+          <a href="#about" class="btn btn--primary">
+            <span data-i18n="hero-cta1">Découvrir mon parcours</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#contact" class="btn btn--ghost">
+            <span data-i18n="hero-cta2">Un renseignement&nbsp;? Contactez-moi</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <div class="hero__media-glow"></div>
+        <img src="image hero.jpg" alt="Saleh Abdulsalam, mécanicien à Dijon" class="hero__img" />
+
+        <div class="hero__badge">
+          <span class="hero__badge-icon">✦</span>
+          <div>
+            <p class="hero__badge-label" data-i18n="hero-badge-label">Recherche</p>
+            <p class="hero__badge-value" data-i18n="hero-badge-value">Alternance Bac Pro</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <span data-i18n="hero-scroll">Scroll</span>
+      <span class="hero__scroll-arrow" aria-hidden="true">↓</span>
+    </div>
+  </header>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  STATS — 4 chiffres-clés                                               ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats__grid">
+
+        <div class="stat-card">
+          <div class="stat-card__icon">🔧</div>
+          <div class="stat-card__value">3<span class="stat-card__unit" data-i18n="stat1-unit">ans</span></div>
+          <p class="stat-card__title" data-i18n="stat1-title">Expérience cumulée</p>
+          <p class="stat-card__desc" data-i18n="stat1-desc">Atelier & auto-formation</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__icon">🎓</div>
+          <div class="stat-card__value">CAP<span class="stat-card__unit" data-i18n="stat2-unit">+ Bac Pro</span></div>
+          <p class="stat-card__title" data-i18n="stat2-title">Maintenance Véhicules</p>
+          <p class="stat-card__desc" data-i18n="stat2-desc">Bac Pro en alternance</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__icon">📈</div>
+          <div class="stat-card__value">100%<span class="stat-card__unit" data-i18n="stat3-unit">perso</span></div>
+          <p class="stat-card__title" data-i18n="stat3-title">Matériel de diagnostic</p>
+          <p class="stat-card__desc" data-i18n="stat3-desc">Investi sur fonds propres</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card__icon">📚</div>
+          <div class="stat-card__value">24/7<span class="stat-card__unit" data-i18n="stat4-unit">veille</span></div>
+          <p class="stat-card__title" data-i18n="stat4-title">Auto-formation</p>
+          <p class="stat-card__desc" data-i18n="stat4-desc">Électronique embarquée</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 2 — À PROPOS                                                  ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section id="about" class="section section--about">
+    <div class="container">
+      <div class="row row--reverse-mobile">
+
+        <div class="col col--media">
+          <div class="media-frame">
+            <img src="image a propes.jpg" alt="Saleh à propos — passion et curiosité" class="media-frame__img" />
+          </div>
+        </div>
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="about-eyebrow">⟶ À propos</p>
+          <h2 class="section__title" data-i18n="about-title">Plus qu'un métier.<br /><span class="muted">Une véritable passion.</span></h2>
+          <div class="prose">
+            <p data-i18n="about-p1">À <strong>20 ans</strong>, je suis diplômé d'un <strong>CAP Maintenance des Véhicules</strong> et je cumule <strong>3 ans d'expérience</strong>, réparties entre mes interventions professionnelles et une auto-formation poussée. Mais ce qui me définit vraiment, c'est ma façon d'aborder la mécanique.</p>
+            <p data-i18n="about-p2">Je suis d'un naturel <strong>curieux et proactif</strong>. C'est pour cela que j'ai investi dans mon propre <strong>matériel de diagnostic avancé</strong>. Sur mon temps libre, je m'entraîne à comprendre <strong>l'électronique embarquée</strong>, j'étudie de nouvelles méthodes de réparation avec l'aide des outils numériques, et je cherche toujours à élargir mes connaissances.</p>
+            <p class="prose__quote" data-i18n="about-quote">Dans un secteur qui évolue aussi vite, continuer d'apprendre est pour moi une évidence.</p>
+            <p data-i18n="about-p3">Aujourd'hui, mon objectif est clair : <strong>intégrer une concession dynamique</strong> pour y préparer mon <strong>Bac Pro en alternance</strong> et y apporter ma motivation, tout en restant disponible pour conseiller et aider mon entourage sur l'entretien de leurs véhicules.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 3 — SAVOIR-FAIRE                                              ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section id="savoir-faire" class="section section--alt">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="skills-eyebrow">⟶ Savoir-faire</p>
+          <h2 class="section__title" data-i18n="skills-title">De l'entretien courant<br /><span class="muted">au diagnostic précis.</span></h2>
+
+          <div class="skills">
+
+            <div class="skill-group">
+              <h3 class="skill-group__title" data-i18n="skills-cat1-title">Entretien & Maintenance</h3>
+              <ul class="bullet-list">
+                <li data-i18n="skills-cat1-1"><strong>Vidange</strong> et révision périodique</li>
+                <li data-i18n="skills-cat1-2"><strong>Pneumatiques</strong>, freinage, suspension</li>
+                <li data-i18n="skills-cat1-3"><strong>Distribution</strong>, courroies, embrayage</li>
+                <li data-i18n="skills-cat1-4"><strong>Climatisation</strong> et refroidissement</li>
+              </ul>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-group__title" data-i18n="skills-cat2-title">Diagnostic & Électronique</h3>
+              <ul class="bullet-list">
+                <li data-i18n="skills-cat2-1">Utilisation de <strong>valise de diagnostic</strong> (OBD multimarque)</li>
+                <li data-i18n="skills-cat2-2">Lecture, effacement et interprétation des <strong>codes défauts</strong></li>
+                <li data-i18n="skills-cat2-3">Analyse des <strong>données en temps réel</strong> pour recherche de panne</li>
+                <li data-i18n="skills-cat2-4">Compréhension des <strong>systèmes électroniques embarqués</strong></li>
+              </ul>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-group__title" data-i18n="skills-cat3-title">Mécanique générale</h3>
+              <ul class="bullet-list">
+                <li data-i18n="skills-cat3-1">Démontage et remontage d'<strong>éléments moteurs</strong></li>
+                <li data-i18n="skills-cat3-2">Recherche et <strong>réparation de fuites</strong> (fluides et air)</li>
+                <li data-i18n="skills-cat3-3">Remplacement de <strong>pièces d'usure complexes</strong></li>
+                <li data-i18n="skills-cat3-4"><strong>Contrôles de sécurité</strong> et essais routiers</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col col--media col--sticky">
+          <div class="media-frame">
+            <img src="image Savoir-faire.jpg" alt="Inspection et savoir-faire technique en atelier" class="media-frame__img media-frame__img--tall" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 4 — MON APPROCHE                                              ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section id="approche" class="section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="approach-eyebrow">⟶ Mon approche</p>
+          <h2 class="section__title" data-i18n="approach-title">Comprendre<br /><span class="muted">avant de réparer.</span></h2>
+          <div class="prose">
+            <p data-i18n="approach-p1">La majorité des pannes <strong>mal diagnostiquées</strong> coûtent cher au client — et à l'atelier. Ma méthode est simple : <strong>ne jamais remplacer une pièce</strong> avant d'avoir formellement identifié la <strong>cause racine</strong> du problème.</p>
+            <p data-i18n="approach-p2">Cela demande de la patience, de la méthode, l'utilisation des bons outils et l'analyse des données. C'est l'objectif que je me fixe au quotidien : ne pas être un simple exécutant, mais devenir un <strong>technicien qui apporte de véritables solutions</strong>.</p>
+          </div>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="step__num">01</span>
+              <div>
+                <h4 class="step__title" data-i18n="approach-step1-title">Écoute & recueil d'infos</h4>
+                <p class="step__desc" data-i18n="approach-step1-desc">Comprendre les symptômes avec le client</p>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">02</span>
+              <div>
+                <h4 class="step__title" data-i18n="approach-step2-title">Diagnostic précis</h4>
+                <p class="step__desc" data-i18n="approach-step2-desc">Lecture des données et tests physiques</p>
+              </div>
+            </li>
+            <li class="step">
+              <span class="step__num">03</span>
+              <div>
+                <h4 class="step__title" data-i18n="approach-step3-title">Intervention ciblée</h4>
+                <p class="step__desc" data-i18n="approach-step3-desc">Remplacement de la pièce et vérification</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="col col--media">
+          <div class="media-frame">
+            <img src="image Mon approche.jpg" alt="Saleh appliquant sa méthode de diagnostic" class="media-frame__img" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 5 — POUR MON RÉSEAU                                           ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section id="reseau" class="section section--alt">
+    <div class="container">
+      <div class="row row--reverse-mobile">
+
+        <div class="col col--media">
+          <div class="media-frame">
+            <img src="image Pour mon réseau.jpg" alt="Conseils techniques pour mon réseau" class="media-frame__img" />
+          </div>
+        </div>
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="network-eyebrow">⟶ Pour mon réseau</p>
+          <h2 class="section__title" data-i18n="network-title">Besoin d'un avis<br /><span class="muted">avant de vous décider&nbsp;?</span></h2>
+          <div class="prose">
+            <p data-i18n="network-p1">Si tu fais partie de mon réseau et que tu hésites avant un <strong>achat</strong>, une <strong>réparation</strong>, ou que tu souhaites simplement mieux comprendre un <strong>devis qui te paraît complexe</strong> — n'hésite pas. Je prends le temps d'expliquer, en toute <strong>transparence</strong>, ce qui se passe sous le capot pour t'aider à y voir plus clair.</p>
+          </div>
+
+          <div class="services">
+            <div class="service-card">
+              <span class="service-card__icon">🚗</span>
+              <p data-i18n="network-srv1"><strong>Avis technique</strong> avant achat d'occasion</p>
+            </div>
+            <div class="service-card">
+              <span class="service-card__icon">📄</span>
+              <p data-i18n="network-srv2"><strong>Lecture & explication</strong> de devis d'entretien</p>
+            </div>
+            <div class="service-card">
+              <span class="service-card__icon">🔍</span>
+              <p data-i18n="network-srv3"><strong>Diagnostic préventif</strong> et conseils personnalisés</p>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn btn--primary btn--inline">
+            <span data-i18n="network-cta">Me contacter sur mes réseaux</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 6 — MON DIFFÉRENCIATEUR                                       ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section class="section section--feature">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--media">
+          <div class="media-frame media-frame--big">
+            <img src="image Différenciateur.jpg" alt="Tablette de diagnostic professionnelle" class="media-frame__img" />
+          </div>
+        </div>
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="diff-eyebrow">⟶ Mon Différenciateur</p>
+          <h2 class="section__title" data-i18n="diff-title">Mon outil de diagnostic.<br /><span class="gradient-text">Mon laboratoire personnel.</span></h2>
+          <div class="prose">
+            <p data-i18n="diff-p1">J'ai investi personnellement dans une <strong>tablette de diagnostic professionnelle multimarque avancée</strong>. Ma démarche est simple : pouvoir m'entraîner en dehors des heures d'atelier, analyser les codes défauts par moi-même, comprendre l'<strong>architecture électronique</strong> des véhicules modernes, et arriver chaque matin avec une <strong>longueur d'avance</strong>.</p>
+            <p data-i18n="diff-p2">Cet équipement de pointe me permet d'explorer en profondeur :</p>
+          </div>
+
+          <ul class="feature-list">
+            <li>
+              <strong data-i18n="diff-feat1-strong">Lecture multi-systèmes détaillée</strong>
+              <span data-i18n="diff-feat1-desc">Moteur, ABS, Airbag, BCM, TCM…</span>
+            </li>
+            <li>
+              <strong data-i18n="diff-feat2-strong">Étude de l'électronique embarquée</strong>
+              <span data-i18n="diff-feat2-desc">Observation des codages et adaptations sur véhicules récents</span>
+            </li>
+            <li>
+              <strong data-i18n="diff-feat3-strong">Analyse de l'architecture véhicule</strong>
+              <span data-i18n="diff-feat3-desc">Visualisation de la topologie réseau multiplexé</span>
+            </li>
+            <li>
+              <strong data-i18n="diff-feat4-strong">Veille technologique</strong>
+              <span data-i18n="diff-feat4-desc">Grâce aux mises à jour logicielles régulières de l'outil</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 7 — MON ADN                                                   ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section class="section section--alt">
+    <div class="container">
+
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="adn-eyebrow">⟶ Mon ADN</p>
+        <h2 class="section__title section__title--center" data-i18n="adn-title">Trois piliers,<br /><span class="muted">un seul objectif&nbsp;: l'efficacité.</span></h2>
+      </div>
+
+      <div class="adn-grid">
+
+        <article class="adn-card">
+          <div class="adn-card__glow"></div>
+          <span class="adn-card__num">01</span>
+          <h3 class="adn-card__title" data-i18n="adn-1-title">Investissement technique</h3>
+          <p class="adn-card__desc" data-i18n="adn-1-desc">J'ai investi <strong>de ma poche</strong> dans mon propre matériel de diagnostic avancé. Je m'entraîne en autonomie pour <strong>maîtriser l'électronique embarquée</strong> et gagner en efficacité sur les recherches de pannes.</p>
+        </article>
+
+        <article class="adn-card">
+          <div class="adn-card__glow"></div>
+          <span class="adn-card__num">02</span>
+          <h3 class="adn-card__title" data-i18n="adn-2-title">Auto-formation & Curiosité</h3>
+          <p class="adn-card__desc" data-i18n="adn-2-desc">J'utilise les <strong>outils numériques et l'IA</strong> au quotidien pour découvrir de nouvelles méthodes de réparation. Je reste toujours à l'écoute des <strong>évolutions de l'automobile</strong> pour proposer les meilleurs conseils à mon entourage.</p>
+        </article>
+
+        <article class="adn-card">
+          <div class="adn-card__glow"></div>
+          <span class="adn-card__num">03</span>
+          <h3 class="adn-card__title" data-i18n="adn-3-title">Expérience & Pratique</h3>
+          <p class="adn-card__desc" data-i18n="adn-3-desc">Fort de <strong>3 années de pratique</strong> (mêlant expériences professionnelles en atelier et mécanique personnelle), j'ai développé une <strong>grande rigueur</strong>. De l'entretien multimarque au diagnostic, j'ai l'envie du <strong>travail bien fait</strong>.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 8 — VISION LONG TERME                                         ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section id="vision" class="section section--vision">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="vision-eyebrow">⟶ Vision à long terme</p>
+          <h2 class="section__title" data-i18n="vision-title">L'expertise par la<br /><span class="gradient-text">formation continue.</span></h2>
+          <div class="prose">
+            <p data-i18n="vision-p1">Mon objectif à <strong>court terme</strong> est de décrocher mon alternance pour <strong>exceller dans mon Bac Pro</strong>. Mais ma vision va bien au-delà.</p>
+            <p data-i18n="vision-p2">Le monde de l'automobile évolue à toute vitesse avec <strong>l'électronique</strong> et les <strong>nouvelles motorisations</strong>. Mon ambition est de <strong>ne jamais cesser d'apprendre</strong>. Je souhaite enchaîner les formations spécialisées, monter constamment en compétence et maîtriser les diagnostics les plus pointus.</p>
+            <p class="prose__quote" data-i18n="vision-quote">Mon but n'est pas de m'arrêter à un diplôme, mais de devenir un véritable <strong>expert technique</strong>, capable d'évoluer avec son temps et de résoudre les problèmes que les autres ne trouvent pas.</p>
+          </div>
+        </div>
+
+        <div class="col col--media">
+          <div class="media-frame">
+            <img src="image Vision long terme.jpg" alt="Vision long terme — formation continue et expertise" class="media-frame__img" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  SECTION 9 — CONTACT & RÉSEAUX                                         ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <section id="contact" class="section section--contact">
+    <div class="container">
+      <div class="row">
+
+        <div class="col col--text">
+          <p class="eyebrow" data-i18n="contact-eyebrow">⟶ Contact & Réseaux</p>
+          <h2 class="section__title" data-i18n="contact-title">Restons<br /><span class="muted">en contact.</span></h2>
+          <div class="prose">
+            <p data-i18n="contact-p1">Que vous soyez un <strong>recruteur</strong> à la recherche d'un futur apprenti Bac Pro motivé, ou un <strong>membre de mon réseau</strong> ayant besoin d'un avis technique, n'hésitez pas à m'écrire directement. Je suis facilement joignable et je prends toujours le temps de vous répondre.</p>
+          </div>
+
+          <div class="contact-card">
+            <h3 class="contact-card__title" data-i18n="contact-card-title">Mes coordonnées directes</h3>
+
+            <a href="tel:+33602277181" class="contact-row">
+              <span class="contact-row__icon">📞</span>
+              <div>
+                <p class="contact-row__label" data-i18n="contact-tel-label">Téléphone</p>
+                <p class="contact-row__value">06 02 27 71 81</p>
+              </div>
+            </a>
+
+            <a href="mailto:salehateikk@gmail.com" class="contact-row">
+              <span class="contact-row__icon">✉</span>
+              <div>
+                <p class="contact-row__label" data-i18n="contact-mail-label">Email</p>
+                <p class="contact-row__value">salehateikk@gmail.com</p>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/saleh-ateik" target="_blank" rel="noopener" class="contact-row">
+              <span class="contact-row__icon">in</span>
+              <div>
+                <p class="contact-row__label" data-i18n="contact-linkedin-label">LinkedIn</p>
+                <p class="contact-row__value">linkedin.com/in/saleh-ateik</p>
+              </div>
+            </a>
+
+            <a href="https://www.instagram.com/s.ateikk" target="_blank" rel="noopener" class="contact-row">
+              <span class="contact-row__icon">@</span>
+              <div>
+                <p class="contact-row__label" data-i18n="contact-insta-label">Instagram</p>
+                <p class="contact-row__value">@s.ateikk</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="col col--media">
+          <div class="media-frame">
+            <img src="image Contact & Réseaux.jpg" alt="Contact et réseaux sociaux Saleh Abdulsalam" class="media-frame__img" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ╔═══════════════════════════════════════════════════════════════════════╗
+       ║  FOOTER                                                                ║
+       ╚═══════════════════════════════════════════════════════════════════════╝ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="nav__logo">⚙</span>
+        <span>Autek <span class="accent">Pro</span></span>
+      </div>
+      <p class="footer__copy" data-i18n="footer-copy">© 2026 Saleh Abdulsalam · Conçu avec rigueur à Dijon</p>
+    </div>
+  </footer>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
